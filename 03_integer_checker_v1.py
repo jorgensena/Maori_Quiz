@@ -5,7 +5,7 @@ By Amy Jorgensen
 10/05/22
 """
 
-
+# integer checker
 def int_checker(question):
     valid = False
     while not valid:
