@@ -16,19 +16,19 @@ class Welcome:
         font_colour = "#990000"  # dark red
 
         # Quiz Main Screen GUI
-        self.quiz_frame = Frame(width=300, height=300, bg=bg_colour)
-        self.quiz_frame.grid()
+        self.main_frame = Frame(width=300, height=300, bg=bg_colour)
+        self.main_frame.grid()
 
         # Maori Quiz Heading (row 0)
-        self.maori_quiz_label = Label(self.quiz_frame, text="Maori Quiz",
+        self.maori_main_label = Label(self.main_frame, text="Maori Quiz",
                                       font=("Comic Sans MS", "20", "bold",
                                             "underline"),
                                       bg=bg_colour, fg=font_colour,
                                       padx=10, pady=10)
-        self.maori_quiz_label.grid(row=0)
+        self.maori_main_label.grid(row=0)
 
         # Help Button (row 1)
-        self.help_button = Button(self.quiz_frame, text="Help",
+        self.help_button = Button(self.main_frame, text="Help",
                                   font=("Comic Sans MC", "14"),
                                   padx=10, pady=10, bg=bg_colour,
                                   fg=font_colour, command=self.help)
@@ -39,7 +39,7 @@ class Welcome:
         Help(self)
 
 
-class Help():
+class Help:
     def __init__(self, partner):
         # formatting variables
         bg_colour = "#FFF4D9"  # pale yellow

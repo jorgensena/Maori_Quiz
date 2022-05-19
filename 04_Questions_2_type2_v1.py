@@ -22,9 +22,9 @@ for question in maori_q:
     maori_q.remove(question)
     # get 3 random numbers to set as the other choices
     choices = random.sample(maori_q, 3)
-    print()
-    print(choices)
-    print(question)
+    # print()
+    # print(choices)
+    # print(question)
     # add the question to the multi choice list
     choices.append(question)
 
