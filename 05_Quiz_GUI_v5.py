@@ -36,7 +36,7 @@ class Welcome:
                                   fg=font_colour, command=self.quiz)
         self.quiz_button.grid(row=1)
 
-        # Button frame (row 2) (for help and dismiss btns)
+        # Button frame (row 2) (for help and welcome btns)
         self.main_button_frame = Frame(self.main_frame, bg=bg_colour)
         self.main_button_frame.grid(row=2)
 
@@ -95,7 +95,7 @@ class Quiz:
 
         # Questions Label (row 1)
         self.question_label = Label(self.quiz_frame,
-                                    text="Questions go here...",
+                                    text="Click Start to begin :)",
                                     font=("Comic Sans MS", "16"),
                                     bg=bg_colour, fg=font_colour,
                                     padx=10, pady=10)
@@ -131,7 +131,7 @@ class Quiz:
                                   font=("Comic Sans MS", "14"),
                                   bg="#D4E1F5",  # pale blue
                                   fg=font_colour,
-                                  command=self.change_question)
+                                  command=self.next_question)
         self.next_button.grid(row=0, column=1, padx=5, pady=10)
 
         # Dismiss button (row 5)
@@ -190,9 +190,10 @@ class Quiz:
 
 
     # Method to change the quiz_label to show the next question
-    def change_question(self):
+    def next_question(self):
         self.next_button.config(text="Next")
         self.message_label.config(text="Write your answer below")
+        self.question_entry.delete(0, END)
         # the quiz is 10 questions
         if self.counter != 10:
             self.question, self.q_num_list = next_q(self.maori_q, self.q_num_list)
