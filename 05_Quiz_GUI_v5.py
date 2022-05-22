@@ -72,9 +72,7 @@ class Quiz:
         # potential question position
         self.q_num_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-        # disable buttons
         partner.quiz_button.config(state=DISABLED)
-        self.next_button.config(state=DISABLED)
 
         # Open new window
         self.quiz_box = Toplevel()
@@ -128,7 +126,8 @@ class Quiz:
         self.check_button.grid(row=0, column=0, padx=5, pady=10)
 
         # 'Next' button (column 0)
-        self.next_button = Button(self.quiz_button_frame, text="Next",
+        # When window opens says Start to start the quiz
+        self.next_button = Button(self.quiz_button_frame, text="Start",
                                   font=("Comic Sans MS", "14"),
                                   bg="#D4E1F5",  # pale blue
                                   fg=font_colour,
@@ -144,25 +143,70 @@ class Quiz:
 
     # Method to check question
     def check_question(self):
-        self.next_button.config(state=NORMAL)
+        error = "#ebc091"  # Pale orange bg for when entry box has an error
+        font_colour = "#990000"  # dark red
+        has_errors = False
+        # Retrieve answer entered into Entry field
+        to_check = self.question_entry.get()
+        if self.counter <= 5:
+            try:
+                to_check = int(to_check)
+                self.question_entry.config(bg="white")
+                # Check answer and print output
+                if to_check == self.question[1]:
+                    self.message_label.config(fg=font_colour,
+                                              text="Yay! You got it correct!")
+                else:
+                    self.message_label.config(fg=font_colour,
+                                              text="Oops! That was incorrect")
+
+            except ValueError:
+                self.message_label.config(text="Enter an integer number!",
+                                          fg="black")
+                self.question_entry.config(bg=error)
+                has_errors = True
+        else:
+            to_check = to_check.title()
+            # Check answer and print output
+            if to_check == self.question[0]:
+                self.question_entry.config(bg="white")
+                self.message_label.config(fg=font_colour,
+                                          text="Yay! You got it correct")
+            elif not to_check:
+                self.message_label.config(text="You left it blank!",
+                                          fg="black")
+                self.question_entry.config(bg=error)
+                has_errors = True
+            else:
+                self.question_entry.config(bg="white")
+                self.message_label.config(fg=font_colour,
+                                          text="Oops! That was incorrect")
+        if not has_errors and self.counter != 10:
+            self.next_button.config(state=NORMAL)
+
+        if self.counter == 10:
+            self.message_label.config(text="")
+            self.question_label.config(text="End of Quiz")
+
 
     # Method to change the quiz_label to show the next question
     def change_question(self):
+        self.next_button.config(text="Next")
+        self.message_label.config(text="Write your answer below")
         # the quiz is 10 questions
         if self.counter != 10:
-            question, self.q_num_list = next_q(self.maori_q, self.q_num_list)
+            self.question, self.q_num_list = next_q(self.maori_q, self.q_num_list)
             # First 5 questions convert to integer
             if self.counter < 5:
-                self.question_label.config(text=f"What is {question[0]}?")
+                self.question_label.config(text=f"What is {self.question[0]}?")
             # Last 5 questions convert to Maori
             else:
-                self.question_label.config(text=f"What is {question[1]}?")
-
+                self.question_label.config(text=f"What is {self.question[1]}?")
 
             self.counter += 1
-            # Disable the 'next' button on the 10th question
-            if self.counter == 10:
-                self.next_button.config(state=DISABLED)
+            # Disable the 'next' button after changing the question
+            self.next_button.config(state=DISABLED)
+
 
     # Method to close the quiz GUI
     def close_quiz(self, partner):
@@ -178,17 +222,6 @@ def next_q(q_list, q_num):
     # return random question and new number list
     return q_list[num], q_num
 
-
-# integer checker
-def int_checker(question):
-    valid = False
-    while not valid:
-        try:
-            response = int(input(question))
-            return response
-
-        except ValueError:
-            print("Please enter an integer number")
 
 # main routine
 if __name__ == "__main__":
