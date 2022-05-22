@@ -1,5 +1,5 @@
 """
-Add the test questions to the GUI
+Add the other set of questions (maori to int)
 
 By Amy Jorgensen
 22/05/22
@@ -142,14 +142,19 @@ class Quiz:
 
     # Method to change the quiz_label to show the next question
     def change_question(self):
-
         # the quiz is 10 questions
         if self.counter != 10:
             question, self.q_num_list = next_q(self.maori_q, self.q_num_list)
-            self.question_label.config(text=f"What is {question[1]}?")
+            # First 5 questions convert to integer
+            if self.counter < 5:
+                self.question_label.config(text=f"What is {question[0]}?")
+            # Last 5 questions convert to Maori
+            else:
+                self.question_label.config(text=f"What is {question[1]}?")
+
             print(self.q_num_list)
             self.counter += 1
-
+            # Disable the 'next' button on the 10th question
             if self.counter == 10:
                 self.next_button.config(state=DISABLED)
 
@@ -167,6 +172,17 @@ def next_q(q_list, q_num):
     # return random question and new number list
     return q_list[num], q_num
 
+
+# integer checker
+def int_checker(question):
+    valid = False
+    while not valid:
+        try:
+            response = int(input(question))
+            return response
+
+        except ValueError:
+            print("Please enter an integer number")
 
 # main routine
 if __name__ == "__main__":

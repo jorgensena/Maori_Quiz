@@ -1,5 +1,5 @@
 """
-Add the test questions to the GUI
+Add the other set of questions (maori to int)
 
 By Amy Jorgensen
 22/05/22
@@ -52,13 +52,12 @@ class Welcome:
         print("You asked for help")
 
     def quiz(self):
-        print("You want to start the quiz")
         Quiz(self)
 
 
 class Quiz:
     def __init__(self, partner):
-        print("You wanted to do the quiz :)")
+        print("You want to do the quiz :)")
 
         # formatting variables
         bg_colour = "#FFF4D9"  # pale yellow
@@ -73,7 +72,9 @@ class Quiz:
         # potential question position
         self.q_num_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+        # disable buttons
         partner.quiz_button.config(state=DISABLED)
+        self.next_button.config(state=DISABLED)
 
         # Open new window
         self.quiz_box = Toplevel()
@@ -122,7 +123,8 @@ class Quiz:
         self.check_button = Button(self.quiz_button_frame, text="Check",
                                    font=("Comic Sans MS", "14"),
                                    bg="#D5E8D4",  # pale green
-                                   fg=font_colour)
+                                   fg=font_colour,
+                                   command=self.check_question)
         self.check_button.grid(row=0, column=0, padx=5, pady=10)
 
         # 'Next' button (column 0)
@@ -140,16 +142,25 @@ class Quiz:
                                      command=partial(self.close_quiz, partner))
         self.dismiss_button.grid(row=5, pady=10)
 
+    # Method to check question
+    def check_question(self):
+        self.next_button.config(state=NORMAL)
+
     # Method to change the quiz_label to show the next question
     def change_question(self):
-
         # the quiz is 10 questions
         if self.counter != 10:
             question, self.q_num_list = next_q(self.maori_q, self.q_num_list)
-            self.question_label.config(text=f"What is {question[1]}?")
-            print(self.q_num_list)
-            self.counter += 1
+            # First 5 questions convert to integer
+            if self.counter < 5:
+                self.question_label.config(text=f"What is {question[0]}?")
+            # Last 5 questions convert to Maori
+            else:
+                self.question_label.config(text=f"What is {question[1]}?")
 
+
+            self.counter += 1
+            # Disable the 'next' button on the 10th question
             if self.counter == 10:
                 self.next_button.config(state=DISABLED)
 
@@ -167,6 +178,17 @@ def next_q(q_list, q_num):
     # return random question and new number list
     return q_list[num], q_num
 
+
+# integer checker
+def int_checker(question):
+    valid = False
+    while not valid:
+        try:
+            response = int(input(question))
+            return response
+
+        except ValueError:
+            print("Please enter an integer number")
 
 # main routine
 if __name__ == "__main__":

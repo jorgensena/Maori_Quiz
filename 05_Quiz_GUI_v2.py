@@ -123,7 +123,6 @@ class Quiz:
                                      command=partial(self.close_quiz, partner))
         self.dismiss_button.grid(row=4, pady=10)
 
-
     def close_quiz(self, partner):
         # Put help button back to normal
         partner.quiz_button.config(state=NORMAL)
