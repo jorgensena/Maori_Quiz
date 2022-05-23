@@ -4,7 +4,7 @@ Final version based on Trial 2 method
 Adds break loop and checks for empty list
 
 By Amy Jorgensen
-22/05/22
+23/05/22
 """
 
 # Set up empty lists
