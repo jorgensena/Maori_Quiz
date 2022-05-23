@@ -185,7 +185,6 @@ class Quiz:
             self.next_button.config(state=NORMAL)
 
         if self.counter == 10:
-            self.message_label.config(text="")
             self.question_label.config(text="End of Quiz")
 
 

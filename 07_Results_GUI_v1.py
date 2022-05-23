@@ -1,8 +1,8 @@
 """
-Enable the results button on the main window when the results GUI is closed
+Make the Results GUI
 
 By Amy Jorgensen
-05/05/22
+22/05/22
 """
 from tkinter import *
 from functools import partial
