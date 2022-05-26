@@ -1,5 +1,6 @@
 """
 Make the Results GUI
+Add in the results output
 
 By Amy Jorgensen
 22/05/22
@@ -15,6 +16,11 @@ class Welcome:
         bg_colour = "#FFF4D9"  # pale yellow
         font_colour = "#990000"  # dark red
         btn_colour = "#FFFFCC"  # pale yellow
+
+        # Data to be outputted
+        self.all_scores = ["1/3", "2/3", "1/3", "2/3", "3/3", "3/3"]
+        self.all_wrong = ["What is Tahi?", "What is Rua?", "What is Rua?",
+                          "What is Tahi?", "What is Toru?", "What is Toru?"]
 
         # Quiz Main Screen GUI
         self.main_frame = Frame(width=300, height=300, bg=bg_colour)
@@ -47,14 +53,15 @@ class Welcome:
         self.help_button.grid(row=0, column=0, pady=10, padx=10)
         # results Button (row 1)
         self.results_button = Button(self.main_button_frame, text="Results",
-                                  font=("Comic Sans MC", "14"),
-                                  padx=10, pady=10, bg=btn_colour,
-                                  fg=font_colour, command=self.results)
+                                     font=("Comic Sans MC", "14"), padx=10,
+                                     pady=10, bg=btn_colour, fg=font_colour,
+                                     command=lambda: self.results(
+                                         self.all_scores, self.all_wrong))
         self.results_button.grid(row=0, column=1, pady=10, padx=10)
 
-    def results(self):
+    def results(self, all_scores, all_wrong):
         print("You asked for results")
-        Results(self)
+        Results(self, all_scores, all_wrong)
 
     def help(self):
         print("You asked for help")
@@ -64,7 +71,7 @@ class Welcome:
 
 
 class Results:
-    def __init__(self, partner):
+    def __init__(self, partner, all_scores, all_wrong):
         # formatting variables
         bg_colour = "#FFF4D9"  # pale yellow
         font_colour = "#990000"  # dark red
@@ -104,11 +111,35 @@ class Results:
                                   font=("Comic Sans MS", "12"))
         self.results_text.grid(row=1, padx=10, pady=10)
 
-        # Results output goes here (row 2)
+        # Get results
+        scores_string = ""
+        if len(all_scores) >= 5:
+            for item in range(5):
+                scores_string += all_scores[len(all_scores)-item-1]+"\n"
 
-        # Button frame for 'Dismiss' and 'Export' btns (row 3)
+        else:
+            for item in all_scores:
+                scores_string += all_scores[len(all_scores) -
+                                            all_scores.index(item)-1]+"\n"
+
+        # Display scores history
+        self.scores_label = Label(self.results_frame,
+                                  text="Scores:\n" + scores_string,
+                                  bg=bg_colour, fg=font_colour,
+                                  font=("Comic Sans MS", "12"), justify=CENTER)
+        self.scores_label.grid(row=2)
+
+        # Display most recent wrong question
+        last_wrong = all_wrong[-1] + "\n"
+        self.wrong_label = Label(self.results_frame,
+                                 text="Last got Wrong:\n" + last_wrong,
+                                 bg=bg_colour, fg=font_colour,
+                                 font=("Comic Sans MS", "12"), justify=CENTER)
+        self.wrong_label.grid(row=3)
+
+        # Button frame for 'Dismiss' and 'Export' btns (row 4)
         self.results_btn_frame = Frame(self.results_frame, bg=bg_colour)
-        self.results_btn_frame.grid(row=3)
+        self.results_btn_frame.grid(row=4)
 
         # Export button (row 2)
         self.export_btn = Button(self.results_btn_frame, text="Export",
