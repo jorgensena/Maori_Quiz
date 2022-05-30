@@ -1,10 +1,9 @@
 """
 Putting the components together to make a full working program
-Add in a scoring system which then display a final score at the end of the quiz
-Disable the check button after a question is marked
+Check PEP8
 
 By Amy Jorgensen
-30/05/22
+31/05/22
 """
 from tkinter import *
 from functools import partial
@@ -141,7 +140,8 @@ class Quiz:
                                    font=("Comic Sans MS", "14"),
                                    bg="#D5E8D4",  # pale green
                                    fg=font_colour,
-                                   command=lambda: self.check_question(all_scores, all_wrong))
+                                   command=lambda: self.check_question(
+                                       all_scores, all_wrong))
         self.check_button.grid(row=0, column=0, padx=5, pady=10)
 
         # 'Next' button (column 0)
@@ -213,7 +213,7 @@ class Quiz:
 
         if self.counter == 10:
             self.question_label.config(text=f"End of Quiz "
-                                            f"\n{self.quiz_score}/10")
+                                       f"\n{self.quiz_score}/10")
             all_scores.append(f"{self.quiz_score}/10")
 
     # Method to change the quiz_label to show the next question
@@ -471,7 +471,7 @@ class Export:
                                       bg=btn_colour, fg=font_colour,
                                       font=("Comic Sans MS", "14"),
                                       command=partial(lambda: self.save_results
-                                      (partner, all_scores)))
+                                                      (partner, all_scores)))
         self.save_scores_btn.grid(row=0, column=0, padx=10)
 
         # Dismiss btn (row 6)
