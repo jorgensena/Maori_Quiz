@@ -1,7 +1,7 @@
 """
 Make the Export GUI
 Add in method to save data to file
-- Saves Scores and Questions Wrong separately using two button
+- Saves only scores and closes export GUI when complete
 
 By Amy Jorgensen
 26/05/22
@@ -147,7 +147,7 @@ class Results:
         self.export_btn = Button(self.results_btn_frame, text="Export",
                                  bg=btn_colour, fg=font_colour,
                                  font=("Comic Sans MS", "14"),
-                                 command=lambda: self.export(all_scores, all_wrong))
+                                 command=lambda: self.export(all_scores))
         self.export_btn.grid(row=0, column=0, pady=10, padx=10)
 
         # Dismiss button (row 2)
@@ -162,13 +162,13 @@ class Results:
         partner.results_button.config(state=NORMAL)
         self.results_box.destroy()
 
-    def export(self, all_scores, all_wrong):
+    def export(self, all_scores):
         print("You want to export")
-        Export(self, all_scores, all_wrong)
+        Export(self, all_scores)
 
 
 class Export:
-    def __init__(self, partner, all_scores, all_wrong):
+    def __init__(self, partner, all_scores):
         # formatting variables
         bg_colour = "#FFF4D9"  # pale yellow
         font_colour = "#990000"  # dark red
@@ -199,9 +199,8 @@ class Export:
         # Export text (label, row 1)
         self.export_text = Label(self.export_frame,
                                  text="Enter a filename in the box below and "
-                                      "press the Save button to save either "
-                                      "your scores or questions answered wrong"
-                                      " to text file",
+                                      "press the Save button to save your "
+                                      "scores history to a text file.",
                                  justify=CENTER, width=30, wrap=250,
                                  bg=bg_colour, fg=font_colour,
                                  font=("Comic Sans MS", "12"))
@@ -211,7 +210,7 @@ class Export:
         self.warning_text = Label(self.export_frame,
                                   text="If the filename you enter below "
                                        "already exists, it's contents will be "
-                                       "replaced with your chosen results",
+                                       "replaced with your score results",
                                   justify=LEFT, bg="#ebc091",  # orange
                                   font=("Comic Sans MS", "10"), fg="black",
                                   wrap=225, padx=10, pady=10)
@@ -232,25 +231,20 @@ class Export:
         self.export_btn_frame.grid(row=5, pady=10)
 
         # Save btn (row 0 of export_btn_frame)
-        self.save_scores_btn = Button(self.export_btn_frame, text="Save Scores",
+        self.save_scores_btn = Button(self.export_btn_frame, text="Save",
                                bg=btn_colour, fg=font_colour,
-                               font=("Comic Sans MS", "12"),
-                               command=lambda: self.save_results(all_scores))
+                               font=("Comic Sans MS", "14"),
+                               command=partial(lambda: self.save_results(
+                                   partner, all_scores)))
         self.save_scores_btn.grid(row=0, column=0, padx=10)
 
-        # Save btn (row 0 of export_btn_frame)
-        self.save_wrong_btn = Button(self.export_btn_frame, text="Save Questions",
-                               bg=btn_colour, fg=font_colour,
-                               font=("Comic Sans MS", "12"),
-                               command=lambda: self.save_results(all_wrong))
-        self.save_wrong_btn.grid(row=0, column=1, padx=10)
 
         # Dismiss btn (row 6)
-        self.dismiss_btn = Button(self.export_frame, text="Dismiss",
+        self.dismiss_btn = Button(self.export_btn_frame, text="Dismiss",
                                   bg=btn_colour, fg=font_colour,
                                   font=("Comic Sans MS", "14"),
                                   command=partial(self.close_export, partner))
-        self.dismiss_btn.grid(row=6, padx=10)
+        self.dismiss_btn.grid(row=0, column=1, padx=10)
 
 
     def close_export(self, partner):
@@ -259,7 +253,7 @@ class Export:
         self.export_box.destroy()
 
 
-    def save_results(self, data):
+    def save_results(self, partner, data):
         has_error = "no"
         error_type = ""
 
@@ -299,10 +293,9 @@ class Export:
             # close file
             f.close()
 
-            # Display save message
-            self.save_label.config(text=f"Save complete!")
-            # empty entry box
-            self.filename_entry.delete(0, END)
+            # close Export GUI
+            partner.export_btn.config(state=NORMAL)
+            self.export_box.destroy()
 
 
 # main routine
