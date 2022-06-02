@@ -119,8 +119,7 @@ class Quiz:
 
         # Small message label (row 2)
         self.message_label = Label(self.quiz_frame,
-                                   text="Write your answer below",
-                                   font=("Comic Sans MS", "10"),
+                                   text="", font=("Comic Sans MS", "10"),
                                    bg=bg_colour, fg=font_colour)
         self.message_label.grid(row=2)
 
@@ -178,7 +177,9 @@ class Quiz:
                     self.quiz_score += 1  # add a point as correct
                 else:
                     self.message_label.config(fg=font_colour,
-                                              text="Oops! That was incorrect")
+                                              text=f"Oops! That was incorrect"
+                                                   f"\nCorrect answer: "
+                                                   f"{self.question[1]}")
                     self.check_button.config(state=DISABLED)
                     all_wrong.append(f"What is {self.question[0]}")
 
@@ -204,7 +205,9 @@ class Quiz:
             else:
                 self.question_entry.config(bg="white")
                 self.message_label.config(fg=font_colour,
-                                          text="Oops! That was incorrect")
+                                          text=f"Oops! That was incorrect"
+                                               f"\nCorrect answer: "
+                                               f"{self.question[0]}")
                 self.check_button.config(state=DISABLED)
                 all_wrong.append(f"What is {self.question[1]}")
         if not has_errors and self.counter != 10:
