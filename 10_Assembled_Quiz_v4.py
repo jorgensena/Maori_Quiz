@@ -1,5 +1,6 @@
 """
-Disable the export button until a quiz has been completed
+Final Program
+Tidy Code - PEP8 check
 
 By Amy Jorgensen
 02/06/22
@@ -61,15 +62,12 @@ class Welcome:
         self.results_button.grid(row=0, column=1, pady=10, padx=10)
 
     def help(self):
-        print("You asked for help")
         Help(self)
 
     def quiz(self, all_scores, all_wrong):
-        print("You want to do the quiz :)")
         Quiz(self, all_scores, all_wrong)
 
     def results(self, all_scores, all_wrong):
-        print("You asked for results")
         Results(self, all_scores, all_wrong)
 
 
@@ -140,7 +138,8 @@ class Quiz:
                                    font=("Comic Sans MS", "14"),
                                    bg="#D5E8D4",  # pale green
                                    fg=font_colour,
-                                   command=lambda: self.check_question(all_scores, all_wrong))
+                                   command=lambda: self.check_question
+                                   (all_scores, all_wrong))
         self.check_button.grid(row=0, column=0, padx=5, pady=10)
         self.check_button.config(stat=DISABLED)
 
@@ -213,9 +212,8 @@ class Quiz:
 
         if self.counter == 10:
             self.question_label.config(text=f"End of Quiz "
-                                            f"\n{self.quiz_score}/10")
+                                       f"\n{self.quiz_score}/10")
             all_scores.append(f"{self.quiz_score}/10")
-        print(self.quiz_score)  # print for testing purposes
 
     # Method to change the quiz_label to show the next question
     def next_question(self):
@@ -406,7 +404,6 @@ class Results:
         self.results_box.destroy()
 
     def export(self, all_scores):
-        print("You want to export")
         Export(self, all_scores)
 
 
@@ -478,7 +475,7 @@ class Export:
                                       bg=btn_colour, fg=font_colour,
                                       font=("Comic Sans MS", "14"),
                                       command=partial(lambda: self.save_results
-                                      (partner, all_scores)))
+                                                      (partner, all_scores)))
         self.save_scores_btn.grid(row=0, column=0, padx=10)
 
         # Dismiss btn (row 6)

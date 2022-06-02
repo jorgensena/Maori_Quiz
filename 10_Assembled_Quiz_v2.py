@@ -143,6 +143,7 @@ class Quiz:
                                    fg=font_colour,
                                    command=lambda: self.check_question(all_scores, all_wrong))
         self.check_button.grid(row=0, column=0, padx=5, pady=10)
+        self.check_button.config(stat=DISABLED)
 
         # 'Next' button (column 0)
         # When window opens says Start to start the quiz
@@ -181,7 +182,7 @@ class Quiz:
                     self.message_label.config(fg=font_colour,
                                               text="Oops! That was incorrect")
                     self.check_button.config(state=DISABLED)
-                    all_wrong.append(self.question[0])
+                    all_wrong.append(f"What is {self.question[0]}")
 
             except ValueError:
                 self.message_label.config(text="Enter an integer number!",
@@ -207,7 +208,7 @@ class Quiz:
                 self.message_label.config(fg=font_colour,
                                           text="Oops! That was incorrect")
                 self.check_button.config(state=DISABLED)
-                all_wrong.append(f"{self.question[1]}")
+                all_wrong.append(f"What is {self.question[1]}")
         if not has_errors and self.counter != 10:
             self.next_button.config(state=NORMAL)
 
@@ -215,6 +216,7 @@ class Quiz:
             self.question_label.config(text=f"End of Quiz "
                                             f"\n{self.quiz_score}/10")
             all_scores.append(f"{self.quiz_score}/10")
+        print(self.quiz_score)  # print for testing purposes
 
     # Method to change the quiz_label to show the next question
     def next_question(self):
@@ -370,7 +372,7 @@ class Results:
         else:
             last_wrong = all_wrong[-1] + "\n"
         self.wrong_label = Label(self.results_frame,
-                                 text="Last got Wrong:\nWhat is " + last_wrong,
+                                 text="Last got Wrong:\n" + last_wrong,
                                  bg=bg_colour, fg=font_colour,
                                  font=("Comic Sans MS", "12"), justify=CENTER)
         self.wrong_label.grid(row=3)
