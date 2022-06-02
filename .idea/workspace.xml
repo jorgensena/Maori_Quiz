@@ -29,7 +29,7 @@
       <recent name="C:\Users\ami_j\OneDrive - Middleton Grange School\2022\13DTC\3.7 Programming\Assessment\Maori_Quiz" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.10_Assembled_Quiz_v2">
+  <component name="RunManager" selected="Python.10_Assembled_Quiz_v4">
     <configuration name="09_Export_GUI_v3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Maori_Quiz" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,8 +137,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.10_Assembled_Quiz_v2" />
         <item itemvalue="Python.10_Assembled_Quiz_v4" />
+        <item itemvalue="Python.10_Assembled_Quiz_v2" />
         <item itemvalue="Python.10_Assembled_Quiz_v3" />
         <item itemvalue="Python.09_Export_GUI_v3" />
         <item itemvalue="Python.10_Assembled_Quiz_v1" />

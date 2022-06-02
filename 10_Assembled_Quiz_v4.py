@@ -26,7 +26,7 @@ class Welcome:
         self.main_frame.grid()
 
         # Maori Welcome Heading (row 0)
-        self.maori_main_label = Label(self.main_frame, text="Maori Quiz",
+        self.maori_main_label = Label(self.main_frame, text="Māori Quiz",
                                       font=("Comic Sans MS", "30", "bold",
                                             "underline"),
                                       bg=bg_colour, fg=font_colour,
@@ -102,7 +102,7 @@ class Quiz:
         self.quiz_frame.grid()
 
         # Quiz Heading (row 0)
-        self.quiz_heading = Label(self.quiz_frame, text="Maori Quiz",
+        self.quiz_heading = Label(self.quiz_frame, text="Māori Quiz",
                                   font=("Comic Sans MS", "30", "bold",
                                         "underline"),
                                   bg=bg_colour, fg=font_colour,
@@ -178,8 +178,8 @@ class Quiz:
                 else:
                     self.message_label.config(fg=font_colour,
                                               text=f"Oops! That was incorrect"
-                                                   f"\nCorrect answer: "
-                                                   f"{self.question[1]}")
+                                              f"\nCorrect answer: "
+                                              f"{self.question[1]}")
                     self.check_button.config(state=DISABLED)
                     all_wrong.append(f"What is {self.question[0]}")
 
@@ -206,8 +206,8 @@ class Quiz:
                 self.question_entry.config(bg="white")
                 self.message_label.config(fg=font_colour,
                                           text=f"Oops! That was incorrect"
-                                               f"\nCorrect answer: "
-                                               f"{self.question[0]}")
+                                          f"\nCorrect answer: "
+                                          f"{self.question[0]}")
                 self.check_button.config(state=DISABLED)
                 all_wrong.append(f"What is {self.question[1]}")
         if not has_errors and self.counter != 10:
